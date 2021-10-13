@@ -1,5 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { projectAuth } from '../firebase/config';
+import {
+	signInWithEmailAndPassword,
+	onAuthStateChanged,
+	sendPasswordResetEmail,
+	signOut,
+	updatePassword,
+} from '@firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -12,23 +19,23 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const login = (email, password) => {
-		return projectAuth.signInWithEmailAndPassword(email, password);
+		return signInWithEmailAndPassword(projectAuth, email, password);
 	};
 
 	const logout = () => {
-		return projectAuth.signOut();
+		return signOut(projectAuth);
 	};
 
 	const resetPassword = (email) => {
-		return projectAuth.sendPasswordResetEmail(email);
+		return sendPasswordResetEmail(email);
 	};
 
-	const updatePassword = (password) => {
-		return currentUser.updatePassword(password);
+	const updatePass = (password) => {
+		return updatePassword(currentUser, password);
 	};
 
 	useEffect(() => {
-		const unsubscribe = projectAuth.onAuthStateChanged((user) => {
+		const unsubscribe = onAuthStateChanged(projectAuth, (user) => {
 			setCurrentUser(user);
 			setLoading(false);
 		});
@@ -40,7 +47,7 @@ export const AuthProvider = ({ children }) => {
 		currentUser,
 		login,
 		logout,
-		updatePassword,
+		updatePass,
 		resetPassword,
 	};
 
