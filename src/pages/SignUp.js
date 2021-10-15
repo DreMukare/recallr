@@ -1,17 +1,18 @@
 import React, { useRef, useState } from 'react';
-import illustration from '../images/landing-page-illustration.svg';
 import styled from 'styled-components';
+import SignUpIllustration from '../images/sign-up-illustration.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import Linker from '../components/Linker';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import Linker from '../components/Linker';
 
-const FlexSection = styled.div`
+const FlexArea = styled.div`
+	margin-top: 80px;
+	height: 100%;
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
-	margin-top: 80px;
 `;
 const FormSection = styled.section`
 	width: 30%;
@@ -46,27 +47,27 @@ const Article = styled.article`
 	margin-top: 30px;
 `;
 
-const LandingPage = () => {
+const SignUp = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const { login, currentUser } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const history = useHistory();
+	const { currentUser, signup } = useAuth();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			setError('');
 			setLoading(true);
-			await login(emailRef.current.value, passwordRef.current.value);
+			setError('');
+			await signup(emailRef.current.value, passwordRef.current.value);
 			history.push('/dashboard');
 		} catch {
-			setError('Failed to log in');
+			setError('Failed to Sign Up');
 		}
 
-		currentUser && console.log(`${currentUser} is logged in successfully`);
+		currentUser && console.log(currentUser.email);
 		setLoading(false);
 	};
 
@@ -81,7 +82,7 @@ const LandingPage = () => {
 					<h2 className='navbar-item'>Logo</h2>
 				</div>
 				<div className='navbar-end'>
-					<Linker text='Sign Up' to='/sign-up' classname='navbar-item' />
+					<Linker text='Log In' to='/' classname='navbar-item' />
 				</div>
 			</div>
 			{error && (
@@ -90,9 +91,15 @@ const LandingPage = () => {
 					{error}
 				</div>
 			)}
-			<FlexSection>
+			<FlexArea>
+				<IllustrationSection>
+					<img
+						alt='Illustration conveying a welcoming message'
+						src={SignUpIllustration}
+					/>
+				</IllustrationSection>
 				<FormSection>
-					<H2>Welcome back!</H2>
+					<H2>Join Us!</H2>
 					<div className='field'>
 						<label htmlFor='email' className='label'>
 							Email
@@ -131,28 +138,22 @@ const LandingPage = () => {
 						<div className='control'>
 							{loading ? (
 								<Button onClick={handleSubmit} className='is-loading'>
-									Log In
+									Sign Up
 								</Button>
 							) : (
-								<Button onClick={handleSubmit}>Log In</Button>
+								<Button onClick={handleSubmit}>Sign Up</Button>
 							)}
 						</div>
 					</div>
 					<Article>
 						<p>
-							Don't have an account? <Linker text='Sign Up' to='/sign-up' />
+							Already have an account? <Linker text='Log In' to='/' />
 						</p>
 					</Article>
 				</FormSection>
-				<IllustrationSection>
-					<img
-						alt='Illustration of two doctors with a heart between them. Left-most doctor is standing next to a plant while the right-most doctor is taking notes.'
-						src={illustration}
-					/>
-				</IllustrationSection>
-			</FlexSection>
+			</FlexArea>
 		</div>
 	);
 };
 
-export default LandingPage;
+export default SignUp;

@@ -86,6 +86,7 @@ video {
 	font: inherit;
 	vertical-align: baseline;
 	font-family: 'Lato', sans-serif;
+	scroll-behavior: smooth;
 }
 /* HTML5 display-role reset for older browsers */
 article,
@@ -131,6 +132,10 @@ h4,
 h5,
 .header {
 	font-family: 'Yaldevi', sans-serif;
+}
+
+#root {
+	height: 100vh;
 }
 
 /* gradient-to-be-used-in-buttons

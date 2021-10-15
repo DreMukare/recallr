@@ -6,6 +6,7 @@ import {
 	sendPasswordResetEmail,
 	signOut,
 	updatePassword,
+	createUserWithEmailAndPassword,
 } from '@firebase/auth';
 
 const AuthContext = React.createContext();
@@ -20,6 +21,10 @@ export const AuthProvider = ({ children }) => {
 
 	const login = (email, password) => {
 		return signInWithEmailAndPassword(projectAuth, email, password);
+	};
+
+	const signup = (email, password) => {
+		return createUserWithEmailAndPassword(projectAuth, email, password);
 	};
 
 	const logout = () => {
@@ -47,6 +52,7 @@ export const AuthProvider = ({ children }) => {
 		currentUser,
 		login,
 		logout,
+		signup,
 		updatePass,
 		resetPassword,
 	};
