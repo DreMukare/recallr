@@ -11,7 +11,7 @@ const Dash = styled.div`
 const UserDash = () => {
 	return (
 		<Dash>
-			<NavBar />
+			<NavBar firstLink='/settings' firstLinkText='Settings' />
 			<p>You can't see me</p>
 			<Footer />
 		</Dash>

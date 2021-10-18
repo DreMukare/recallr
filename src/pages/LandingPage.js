@@ -66,7 +66,8 @@ const LandingPage = () => {
 			setError('Failed to log in');
 		}
 
-		currentUser && console.log(`${currentUser} is logged in successfully`);
+		currentUser &&
+			console.log(`${currentUser.email} is logged in successfully`);
 		setLoading(false);
 	};
 

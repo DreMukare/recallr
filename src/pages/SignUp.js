@@ -2,9 +2,11 @@ import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import SignUpIllustration from '../images/sign-up-illustration.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
+import { projectFirestore } from '../firebase/config';
+import { doc, setDoc } from '@firebase/firestore';
 import Linker from '../components/Linker';
 
 const FlexArea = styled.div`
@@ -50,6 +52,7 @@ const Article = styled.article`
 const SignUp = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
+	const nameRef = useRef();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const history = useHistory();
@@ -62,6 +65,30 @@ const SignUp = () => {
 			setLoading(true);
 			setError('');
 			await signup(emailRef.current.value, passwordRef.current.value);
+			await setDoc(
+				doc(projectFirestore, currentUser.uid.toString(), 'user-data'),
+				{
+					name: nameRef.current.value,
+					email: emailRef.current.value,
+				}
+			);
+			await setDoc(
+				doc(projectFirestore, currentUser.uid.toString(), 'bio-data'),
+				{
+					height: null,
+					weight: null,
+					bloodGroup: null,
+					eyeColor: null,
+					age: null,
+					allergies: null,
+				}
+			);
+			await setDoc(
+				doc(projectFirestore, currentUser.uid.toString(), 'conditions'),
+				{
+					conditionsList: null,
+				}
+			);
 			history.push('/dashboard');
 		} catch {
 			setError('Failed to Sign Up');
@@ -100,6 +127,22 @@ const SignUp = () => {
 				</IllustrationSection>
 				<FormSection>
 					<H2>Join Us!</H2>
+					<div className='field'>
+						<label htmlFor='name' className='label'>
+							Name
+						</label>
+						<div className='control has-icons-left'>
+							<input
+								ref={nameRef}
+								type='text'
+								className='input'
+								placeholder='Your name'
+							/>
+							<span className='icon is-small is-left'>
+								<FontAwesomeIcon icon={faUser} />
+							</span>
+						</div>
+					</div>
 					<div className='field'>
 						<label htmlFor='email' className='label'>
 							Email
