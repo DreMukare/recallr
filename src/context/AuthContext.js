@@ -1,13 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { projectAuth } from '../firebase/config';
-// import {
-// 	signInWithEmailAndPassword,
-// 	onAuthStateChanged,
-// 	sendPasswordResetEmail,
-// 	signOut,
-// 	updatePassword,
-// 	createUserWithEmailAndPassword,
-// } from '@firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -20,7 +12,6 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const login = (email, password) => {
-		// return signInWithEmailAndPassword(projectAuth, email, password);
 		return projectAuth.signInWithEmailAndPassword(email, password);
 	};
 
@@ -41,7 +32,6 @@ export const AuthProvider = ({ children }) => {
 	};
 
 	useEffect(() => {
-		// const unsubscribe = onAuthStateChanged(projectAuth, (user) => {
 		const unsubscribe = projectAuth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
 			setLoading(false);

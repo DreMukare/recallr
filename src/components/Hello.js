@@ -12,16 +12,13 @@ const Hello = () => {
 	const [name, setName] = useState('');
 
 	useEffect(() => {
-		const collectionId = currentUser.uid.toString();
+		const collectionId = currentUser.email;
 		const fetchData = async () => {
 			const userName = await projectFirestore
 				.collection(collectionId)
 				.doc('user-data')
 				.get();
-			userName.exists()
-				? console.log(userName.data())
-				: console.log(collectionId);
-			setName('test');
+			setName(userName.data().name);
 		};
 
 		fetchData();

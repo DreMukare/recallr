@@ -65,25 +65,22 @@ const SignUp = () => {
 			setError('');
 			await signup(emailRef.current.value, passwordRef.current.value);
 			await projectFirestore
-				.collection(currentUser.uid.toString())
+				.collection(currentUser.email)
 				.doc('user-data')
 				.set({
 					name: nameRef.current.value,
 					email: emailRef.current.value,
 				});
+			await projectFirestore.collection(currentUser.email).doc('bio-data').set({
+				height: null,
+				weight: null,
+				bloodGroup: null,
+				eyeColor: null,
+				age: null,
+				allergies: null,
+			});
 			await projectFirestore
-				.collection(currentUser.uid.toString())
-				.doc('bio-data')
-				.set({
-					height: null,
-					weight: null,
-					bloodGroup: null,
-					eyeColor: null,
-					age: null,
-					allergies: null,
-				});
-			await projectFirestore
-				.collection(currentUser.uid.toString())
+				.collection(currentUser.email)
 				.doc('conditions')
 				.set({
 					conditionsList: null,
