@@ -79,8 +79,6 @@ time,
 mark,
 audio,
 video {
-	margin: 0;
-	padding: 0;
 	border: 0;
 	font-size: 100%;
 	font: inherit;
@@ -137,14 +135,3 @@ h5,
 #root {
 	height: 100vh;
 }
-
-/* gradient-to-be-used-in-buttons
-background: hsla(2, 78%, 82%, 1);
-
-background: linear-gradient(45deg, hsla(2, 78%, 82%, 1) 0%, hsla(243, 97%, 69%, 1) 69%, hsla(236, 19%, 28%, 1) 100%);
-
-background: -moz-linear-gradient(45deg, hsla(2, 78%, 82%, 1) 0%, hsla(243, 97%, 69%, 1) 69%, hsla(236, 19%, 28%, 1) 100%);
-
-background: -webkit-linear-gradient(45deg, hsla(2, 78%, 82%, 1) 0%, hsla(243, 97%, 69%, 1) 69%, hsla(236, 19%, 28%, 1) 100%);
-
-filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#f5b1af", endColorstr="#6b62fd", GradientType=1 ); */

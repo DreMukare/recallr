@@ -36,10 +36,14 @@ const FooterContainer = styled.footer`
 	filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#f5b1af", endColorstr="#6b62fd", GradientType=1 );
 `;
 
+const H2 = styled.h2`
+	margin-right: 30px;
+`;
+
 export const Footer = () => {
 	return (
 		<FooterContainer>
-			<h2>Recallr</h2>
+			<H2>Recallr</H2>
 		</FooterContainer>
 	);
 };

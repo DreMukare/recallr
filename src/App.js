@@ -5,6 +5,8 @@ import LandingPage from './pages/LandingPage';
 import UserDash from './pages/UserDash';
 import SignUp from './pages/SignUp';
 import Settings from './pages/Settings';
+import { MoreDetails } from './pages/MoreDetails';
+import { Conditions } from './pages/Conditions';
 
 function App() {
 	return (
@@ -16,6 +18,8 @@ function App() {
 						<Route path='/sign-up' exact component={SignUp} />
 						<PrivateRoute path='/dashboard' component={UserDash} />
 						<PrivateRoute path='/settings' component={Settings} />
+						<PrivateRoute path='/more-details' component={MoreDetails} />
+						<PrivateRoute path='/conditions' component={Conditions} />
 					</Switch>
 				</div>
 			</Router>

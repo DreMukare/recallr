@@ -13,9 +13,8 @@ const UserDash = () => {
 	return (
 		<Dash>
 			<NavBar firstLink='/settings' firstLinkText='Settings' />
-			<aside>
-				<Hello />
-			</aside>
+			<Hello />
+
 			<p>You can't see me</p>
 			<Footer />
 		</Dash>

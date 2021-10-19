@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
-// import styled from 'styled-components';
+import styled from 'styled-components';
 import Linker from '../components/Linker';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router';
+
+const Nav = styled.nav`
+	border-bottom: 1px solid #8687a1;
+`;
 
 export const NavBar = ({ firstLink, firstLinkText }) => {
 	const { logout } = useAuth();
@@ -32,7 +36,7 @@ export const NavBar = ({ firstLink, firstLinkText }) => {
 					{error}
 				</div>
 			)}
-			<div className='navbar' role='navigation' aria-label='main navigation'>
+			<Nav className='navbar' role='navigation' aria-label='main navigation'>
 				<section className='navbar-brand'>
 					<h2 className='navbar-item'>Logo</h2>
 				</section>
@@ -46,7 +50,7 @@ export const NavBar = ({ firstLink, firstLinkText }) => {
 						</button>
 					</div>
 				</section>
-			</div>
+			</Nav>
 		</>
 	);
 };

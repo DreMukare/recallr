@@ -71,21 +71,8 @@ const SignUp = () => {
 					name: nameRef.current.value,
 					email: emailRef.current.value,
 				});
-			await projectFirestore.collection(currentUser.email).doc('bio-data').set({
-				height: null,
-				weight: null,
-				bloodGroup: null,
-				eyeColor: null,
-				age: null,
-				allergies: null,
-			});
-			await projectFirestore
-				.collection(currentUser.email)
-				.doc('conditions')
-				.set({
-					conditionsList: null,
-				});
-			history.push('/dashboard');
+
+			history.push('/more-details');
 		} catch {
 			setError('Failed to Sign Up');
 		}
@@ -129,6 +116,7 @@ const SignUp = () => {
 						</label>
 						<div className='control has-icons-left'>
 							<input
+								id='name'
 								ref={nameRef}
 								type='text'
 								className='input'
@@ -145,6 +133,7 @@ const SignUp = () => {
 						</label>
 						<div className='control has-icons-left'>
 							<input
+								id='email'
 								ref={emailRef}
 								type='email'
 								className='input'
@@ -162,6 +151,7 @@ const SignUp = () => {
 						</label>
 						<div className='control has-icons-left'>
 							<input
+								id='password'
 								ref={passwordRef}
 								type='password'
 								className='input'

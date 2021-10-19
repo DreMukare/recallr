@@ -5,6 +5,16 @@ import { projectFirestore } from '../firebase/config';
 
 const Greeting = styled.h1`
 	font-size: 3em;
+	margin: 30px;
+	background: rgb(107, 98, 253);
+	background: linear-gradient(
+		90deg,
+		rgba(107, 98, 253, 1) 0%,
+		rgba(241, 100, 132, 1) 40%,
+		rgba(177, 173, 253, 1) 100%
+	);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 `;
 
 const Hello = () => {
@@ -26,7 +36,7 @@ const Hello = () => {
 
 	return (
 		<div>
-			<Greeting>Hello there, {name}</Greeting>
+			<Greeting>Hello there, {name}!</Greeting>
 		</div>
 	);
 };

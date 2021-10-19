@@ -100,6 +100,7 @@ const LandingPage = () => {
 						</label>
 						<div className='control has-icons-left'>
 							<input
+								id='email'
 								ref={emailRef}
 								type='email'
 								className='input'
@@ -117,6 +118,7 @@ const LandingPage = () => {
 						</label>
 						<div className='control has-icons-left'>
 							<input
+								id='password'
 								ref={passwordRef}
 								type='password'
 								className='input'
