@@ -106,7 +106,7 @@ const LandingPage = () => {
 								placeholder='you@yourfavehost.com'
 								required
 							/>
-							<span class='icon is-small is-left'>
+							<span className='icon is-small is-left'>
 								<FontAwesomeIcon icon={faEnvelope} />
 							</span>
 						</div>
@@ -123,7 +123,7 @@ const LandingPage = () => {
 								placeholder='Password'
 								required
 							/>
-							<span class='icon is-small is-left'>
+							<span className='icon is-small is-left'>
 								<FontAwesomeIcon icon={faLock} />
 							</span>
 						</div>

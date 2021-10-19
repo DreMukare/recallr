@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { projectAuth } from '../firebase/config';
-import {
-	signInWithEmailAndPassword,
-	onAuthStateChanged,
-	sendPasswordResetEmail,
-	signOut,
-	updatePassword,
-	createUserWithEmailAndPassword,
-} from '@firebase/auth';
+// import {
+// 	signInWithEmailAndPassword,
+// 	onAuthStateChanged,
+// 	sendPasswordResetEmail,
+// 	signOut,
+// 	updatePassword,
+// 	createUserWithEmailAndPassword,
+// } from '@firebase/auth';
 
 const AuthContext = React.createContext();
 
@@ -20,27 +20,29 @@ export const AuthProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true);
 
 	const login = (email, password) => {
-		return signInWithEmailAndPassword(projectAuth, email, password);
+		// return signInWithEmailAndPassword(projectAuth, email, password);
+		return projectAuth.signInWithEmailAndPassword(email, password);
 	};
 
 	const signup = (email, password) => {
-		return createUserWithEmailAndPassword(projectAuth, email, password);
+		return projectAuth.createUserWithEmailAndPassword(email, password);
 	};
 
 	const logout = () => {
-		return signOut(projectAuth);
+		return projectAuth.signOut();
 	};
 
 	const resetPassword = (email) => {
-		return sendPasswordResetEmail(email);
+		return projectAuth.sendPasswordResetEmail(email);
 	};
 
 	const updatePass = (password) => {
-		return updatePassword(currentUser, password);
+		return currentUser.updatePassword(password);
 	};
 
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(projectAuth, (user) => {
+		// const unsubscribe = onAuthStateChanged(projectAuth, (user) => {
+		const unsubscribe = projectAuth.onAuthStateChanged((user) => {
 			setCurrentUser(user);
 			setLoading(false);
 		});
