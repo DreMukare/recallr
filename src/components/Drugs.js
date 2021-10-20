@@ -43,9 +43,7 @@ const Button = styled.button`
 
 export const Drugs = () => {
 	const { currentUser } = useAuth();
-	const [drugName, setDrugName] = useState('');
 	const [dosage, setDosage] = useState('');
-	const [instructions, setInstructions] = useState('');
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
 	const nameRef = useRef();
@@ -61,15 +59,21 @@ export const Drugs = () => {
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('drugs')
-				.collection(nameRef.current.value)
-				.add({
-					name: nameRef.current.value,
-					dosage: dosageRef.current.value,
-					instructions: instructionRef.current.value,
+				.update({
+					[nameRef.current.value]: {
+						name: nameRef.current.value,
+						dosage: dosageRef.current.value,
+						instructions: instructionRef.current.value,
+					},
 				});
 		} catch (error) {
 			setError(error);
 		}
+
+		nameRef.current.value = '';
+		dosageRef.current.value = '';
+		instructionRef.current.value = '';
+		setLoading(false);
 	};
 
 	useEffect(() => {
@@ -78,12 +82,12 @@ export const Drugs = () => {
 			const dose = await projectFirestore
 				.collection(collectionId)
 				.doc('drugs')
-				.listCollections();
-			console.log(dose.data());
+				.get();
+			setDosage(dose.data());
 		};
 
 		fetchData();
-	}, [currentUser]);
+	}, [currentUser, dosage]);
 
 	return (
 		<Container className='box'>
@@ -91,7 +95,7 @@ export const Drugs = () => {
 				These are your drug subscriptions
 			</h4>
 			<hr />
-			<section></section>
+			{!error && <section></section>}
 			<hr />
 			<Form className='control is-flex'>
 				<section className='field m-3'>
@@ -134,11 +138,26 @@ export const Drugs = () => {
 					</section>
 				</section>
 				<section className='field m-3'>
-					<Button onClick={handleAdd} className='button is-primary is-outlined'>
-						<span className='icon is-small'>
-							<FontAwesomeIcon icon={faPlus} />
-						</span>
-					</Button>
+					{loading ? (
+						<Button
+							onClick={handleAdd}
+							className='button is-loading is-primary is-outlined'
+						>
+							<span className='icon is-small'>
+								<FontAwesomeIcon icon={faPlus} />
+							</span>
+						</Button>
+					) : (
+						<Button
+							onClick={handleAdd}
+							className='button
+           is-primary is-outlined'
+						>
+							<span className='icon is-small'>
+								<FontAwesomeIcon icon={faPlus} />
+							</span>
+						</Button>
+					)}
 				</section>
 			</Form>
 		</Container>
