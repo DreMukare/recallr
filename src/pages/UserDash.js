@@ -13,9 +13,11 @@ const UserDash = () => {
 	return (
 		<Dash>
 			<NavBar firstLink='/settings' firstLinkText='Settings' />
-			<Hello />
+			<main className='is-flex'>
+				<Hello />
 
-			<p>You can't see me</p>
+				<p>You can't see me</p>
+			</main>
 			<Footer />
 		</Dash>
 	);

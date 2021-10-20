@@ -131,7 +131,7 @@ const LandingPage = () => {
 						</div>
 					</div>
 					<div className='field'>
-						<div className='control'>
+						<div className='control is-flex is-justify-content-center'>
 							{loading ? (
 								<Button onClick={handleSubmit} className='is-loading'>
 									Log In

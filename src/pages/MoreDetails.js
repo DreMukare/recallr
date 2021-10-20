@@ -106,7 +106,7 @@ export const MoreDetails = () => {
 				</div>
 			)}
 			<Details>
-				<Instruction>Please fill in the form below</Instruction>
+				<Instruction>One more step</Instruction>
 				<Form className='box'>
 					<section className='field'>
 						<label htmlFor='allergies' className='label'>
@@ -234,7 +234,7 @@ export const MoreDetails = () => {
 						</div>
 					</section>
 					<section className='field'>
-						<div className='control'>
+						<div className='control is-flex is-justify-content-flex-end'>
 							{loading ? (
 								<Button onClick={handleSubmit} className='is-loading'>
 									Next
