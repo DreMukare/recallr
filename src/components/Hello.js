@@ -84,9 +84,8 @@ const Hello = () => {
 									</li>
 								))}
 							</List>
-						*/}
-
-						{console.log(typeof bio.allergies.split(', '))}
+								*/}
+						<p className='ml-4'>{bio.allergies}</p>
 					</article>
 					<article>
 						<P className='mb-3 is-size-5'>Conditions</P>
