@@ -4,6 +4,7 @@ import { NavBar } from '../components/NavBar';
 import { Footer } from '../components/Footer';
 import Hello from '../components/Hello';
 import { Drugs } from '../components/Drugs';
+import Records from '../components/Records';
 
 const Dash = styled.div`
 	width: 100%;
@@ -18,6 +19,7 @@ const UserDash = () => {
 				<Hello />
 				<aside className='is-flex is-flex-direction-column'>
 					<Drugs />
+					<Records />
 				</aside>
 			</main>
 			<Footer />

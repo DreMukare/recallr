@@ -29,7 +29,7 @@ const Button = styled.button`
 `;
 
 const Section = styled.section`
-	height: 150px;
+	height: 110px;
 	overflow-y: auto;
 
 	&::-webkit-scrollbar {
