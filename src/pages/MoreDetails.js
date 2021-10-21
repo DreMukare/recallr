@@ -236,11 +236,17 @@ export const MoreDetails = () => {
 					<section className='field'>
 						<div className='control is-flex is-justify-content-flex-end'>
 							{loading ? (
-								<Button onClick={handleSubmit} className='is-loading'>
+								<Button
+									type='submit'
+									onClick={handleSubmit}
+									className='is-loading'
+								>
 									Next
 								</Button>
 							) : (
-								<Button onClick={handleSubmit}>Next</Button>
+								<Button type='submit' onClick={handleSubmit}>
+									Next
+								</Button>
 							)}
 						</div>
 					</section>

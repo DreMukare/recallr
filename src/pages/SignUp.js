@@ -166,11 +166,17 @@ const SignUp = () => {
 					<div className='field'>
 						<div className='control is-flex is-justify-content-center'>
 							{loading ? (
-								<Button onClick={handleSubmit} className='is-loading'>
+								<Button
+									type='submit'
+									onClick={handleSubmit}
+									className='is-loading'
+								>
 									Sign Up
 								</Button>
 							) : (
-								<Button onClick={handleSubmit}>Sign Up</Button>
+								<Button type='submit' onClick={handleSubmit}>
+									Sign Up
+								</Button>
 							)}
 						</div>
 					</div>

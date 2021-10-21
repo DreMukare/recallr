@@ -133,11 +133,17 @@ const LandingPage = () => {
 					<div className='field'>
 						<div className='control is-flex is-justify-content-center'>
 							{loading ? (
-								<Button onClick={handleSubmit} className='is-loading'>
+								<Button
+									type='submit'
+									onClick={handleSubmit}
+									className='is-loading'
+								>
 									Log In
 								</Button>
 							) : (
-								<Button onClick={handleSubmit}>Log In</Button>
+								<Button type='submit' onClick={handleSubmit}>
+									Log In
+								</Button>
 							)}
 						</div>
 					</div>

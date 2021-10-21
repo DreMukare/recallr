@@ -147,11 +147,17 @@ export const Conditions = () => {
 					<hr />
 					<div className='field is-flex is-justify-content-flex-end'>
 						{loading ? (
-							<Button onClick={handleSubmit} className='is-loading'>
+							<Button
+								type='submit'
+								onClick={handleSubmit}
+								className='is-loading'
+							>
 								Finish Up
 							</Button>
 						) : (
-							<Button onClick={handleSubmit}>Finish</Button>
+							<Button type='submit' onClick={handleSubmit}>
+								Finish
+							</Button>
 						)}
 					</div>
 				</Form>

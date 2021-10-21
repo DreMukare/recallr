@@ -3,26 +3,13 @@ import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import { projectFirestore } from '../firebase/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
+import firebase from 'firebase/app';
+import 'firebase/firestore';
 
 const Container = styled.section`
 	margin: 10px;
 	width: 85em;
-	overflow-y: auto;
-
-	&::-webkit-scrollbar {
-		width: 1px;
-	}
-
-	&::-webkit-scrollbar-track {
-		background-color: #bcbac6;
-		border-radius: 100px;
-	}
-
-	&::-webkit-scrollbar-thumb {
-		box-shadow: #f16484;
-		border-radius: 100px;
-	}
 `;
 
 const Form = styled.form`
@@ -41,11 +28,31 @@ const Button = styled.button`
 	margin-top: 1.5em;
 `;
 
+const Section = styled.section`
+	height: 150px;
+	overflow-y: auto;
+
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	&::-webkit-scrollbar-track {
+		background-color: #bcbac6;
+		border-radius: 100px;
+	}
+
+	&::-webkit-scrollbar-thumb {
+		background-color: #f16484;
+		border-radius: 100px;
+	}
+`;
+
 export const Drugs = () => {
 	const { currentUser } = useAuth();
-	const [dosage, setDosage] = useState('');
+	const [dosage, setDosage] = useState({});
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const [count, setCount] = useState(0);
 	const nameRef = useRef();
 	const dosageRef = useRef();
 	const instructionRef = useRef();
@@ -56,6 +63,7 @@ export const Drugs = () => {
 		try {
 			setLoading(true);
 			setError('');
+			setCount((count) => count + 1);
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('drugs')
@@ -66,6 +74,8 @@ export const Drugs = () => {
 						instructions: instructionRef.current.value,
 					},
 				});
+
+			console.log(dosage);
 		} catch (error) {
 			setError(error);
 		}
@@ -84,10 +94,11 @@ export const Drugs = () => {
 				.doc('drugs')
 				.get();
 			setDosage(dose.data());
+			console.log(count);
 		};
 
-		fetchData();
-	}, [currentUser, dosage]);
+		return fetchData();
+	}, [currentUser, count]);
 
 	return (
 		<Container className='box'>
@@ -95,7 +106,42 @@ export const Drugs = () => {
 				These are your drug subscriptions
 			</h4>
 			<hr />
-			{!error && <section></section>}
+			{!error && (
+				<Section>
+					<ul>
+						{Object.keys(dosage).map((key, index) => (
+							<li key={index} className='block is-flex is-align-items-center'>
+								<article className='content block'>
+									<p>
+										<b>{key}</b>
+									</p>
+									<p>Dosage: {dosage[key].dosage}</p>
+									<p>
+										Extra instructions: {dosage[key]['instructions'] || 'None'}
+									</p>
+								</article>
+								<button
+									onClick={(e) => {
+										projectFirestore
+											.collection(currentUser.email)
+											.doc('drugs')
+											.update({
+												[dosage[key]['name']]:
+													firebase.firestore.FieldValue.delete(),
+											});
+										setCount((count) => count - 1);
+									}}
+									className='button ml-3 is-danger is-outlined'
+								>
+									<span className='icon is-small'>
+										<FontAwesomeIcon icon={faTrash} />
+									</span>
+								</button>
+							</li>
+						))}
+					</ul>
+				</Section>
+			)}
 			<hr />
 			<Form className='control is-flex'>
 				<section className='field m-3'>
@@ -140,6 +186,7 @@ export const Drugs = () => {
 				<section className='field m-3'>
 					{loading ? (
 						<Button
+							type='submit'
 							onClick={handleAdd}
 							className='button is-loading is-primary is-outlined'
 						>
@@ -149,6 +196,7 @@ export const Drugs = () => {
 						</Button>
 					) : (
 						<Button
+							type='submit'
 							onClick={handleAdd}
 							className='button
            is-primary is-outlined'
