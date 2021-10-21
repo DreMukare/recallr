@@ -70,7 +70,7 @@ const Hello = () => {
 							<li className='mb-3'>Age: &emsp; {bio.dob}</li>
 							<li className='mb-3'>Eye Color: &emsp; {bio.eyeColor}</li>
 							<li className='mb-3'>Gender: &emsp; {bio.gender}</li>
-							<li className='mb-3'>Weight: &emsp; {bio.weight}</li>
+							<li className='mb-3'>Weight: &emsp; {bio.weight} kg</li>
 							<li className='mb-3'>Height: &emsp; {bio.height}</li>
 						</List>
 					</article>
