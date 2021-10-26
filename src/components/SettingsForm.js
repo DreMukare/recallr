@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 import { projectFirestore } from '../firebase/config';
@@ -10,7 +10,11 @@ import {
 	faWineGlass,
 	faThermometerQuarter,
 	faTrash,
+	faPlus,
+	faUmbrella,
 } from '@fortawesome/free-solid-svg-icons';
+import 'firebase/firestore';
+import firebase from 'firebase/app';
 
 const Container = styled.section`
 	margin: 10px;
@@ -19,6 +23,16 @@ const Container = styled.section`
 
 const Form = styled.form`
 	display: flex;
+`;
+
+const BioSection = styled.section`
+	padding-right: 15px;
+	border-right: 1px solid #57d0b1;
+`;
+
+const AllergiesSection = styled.section`
+	padding-right: 15px;
+	border-right: 1px solid #57d0b1;
 `;
 
 const Button = styled.button`
@@ -49,9 +63,12 @@ export const SettingsForm = () => {
 	const smokeRef = useRef();
 	const drinkRef = useRef();
 	const allergiesRef = useRef();
+	const conditionsRef = useRef();
+	const insuredRef = useRef();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const [conditions, setConditions] = useState([]);
+	const [count, setCount] = useState(0);
 
 	const handleBio = async (e) => {
 		e.preventDefault();
@@ -63,6 +80,7 @@ export const SettingsForm = () => {
 				.collection(currentUser.email)
 				.doc('bio-data')
 				.update({
+					insured: insuredRef.current.value,
 					gender: genderRef.current.value,
 					weight: weightRef.current.value,
 					smoke: smokeRef.current.value,
@@ -89,7 +107,11 @@ export const SettingsForm = () => {
 				.collection(currentUser.email)
 				.doc('bio-data')
 				.update({
-					allergies: prevAllergies + ', ' + allergiesRef.current.value,
+					allergies: [
+						prevAllergies
+							? prevAllergies + ', ' + allergiesRef.current.value
+							: allergiesRef.current.value,
+					],
 				});
 		} catch (error) {
 			setError(error);
@@ -97,6 +119,46 @@ export const SettingsForm = () => {
 
 		setLoading(false);
 	};
+
+	const handleCondition = async (e) => {
+		e.preventDefault();
+
+		try {
+			setLoading(true);
+			setError('');
+			console.log(conditionsRef.current.value);
+			await projectFirestore
+				.collection(currentUser.email)
+				.doc('conditions')
+				.update({
+					conditionsList: firebase.firestore.FieldValue.arrayUnion(
+						conditionsRef.current.value
+					),
+				});
+		} catch (error) {
+			setError(error);
+		}
+
+		conditionsRef.current.value = '';
+		setCount((count) => count + 1);
+		setLoading(false);
+		console.log(conditions);
+	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			const prexistingConditions = await projectFirestore
+				.collection(currentUser.email)
+				.doc('conditions')
+				.get();
+			const list = prexistingConditions.data().conditionsList;
+
+			setConditions([...list]);
+			console.log(count);
+		};
+
+		return fetchData();
+	}, [currentUser, count]);
 
 	const handleClick = (e) => {
 		setError('');
@@ -115,9 +177,27 @@ export const SettingsForm = () => {
 			</h4>
 			<hr />
 			<Form>
-				<section className='control mr-3'>
+				<BioSection className='control mr-3'>
 					<p>Bio Data</p>
 					<hr />
+					<section className='field m-3 is-flex is-align-items-center'>
+						<label htmlFor='insurance' className='label mr-2'>
+							Insured
+						</label>
+						<div className='control has-icons-left'>
+							<input
+								ref={insuredRef}
+								type='text'
+								className='input'
+								id='insurance'
+								placeholder='Yes or No'
+								required
+							/>
+							<span className='icon is-left is-small'>
+								<FontAwesomeIcon icon={faUmbrella} />
+							</span>
+						</div>
+					</section>
 					<section className='field m-3 is-flex is-align-items-center'>
 						<label htmlFor='gender' className='label mr-2'>
 							Gender
@@ -131,9 +211,9 @@ export const SettingsForm = () => {
 								placeholder='Your gender'
 								required
 							/>
-							<icon className='icon is-left is-small'>
+							<span className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faVenusMars} />
-							</icon>
+							</span>
 						</div>
 					</section>
 					<section className='field m-3 is-flex is-align-items-center'>
@@ -205,8 +285,8 @@ export const SettingsForm = () => {
 							)}
 						</div>
 					</div>
-				</section>
-				<section className='control mr-4'>
+				</BioSection>
+				<AllergiesSection className='control mr-4'>
 					<p className='mb-3'>Allergies</p>
 					<p className='mb-3 is-family-monospace'>
 						Adding to this will add to the existing list of allergies
@@ -247,9 +327,9 @@ export const SettingsForm = () => {
 							)}
 						</div>
 					</div>
-				</section>
+				</AllergiesSection>
 				<section className='control'>
-					<p>Conditions</p>
+					<p>Pre-existing Medical Conditions</p>
 					<hr />
 					<section>
 						<ul>
@@ -262,10 +342,12 @@ export const SettingsForm = () => {
 												.collection(currentUser.email)
 												.doc('conditions')
 												.update({
-													conditionsList: conditions.arrayRemove(
-														conditions.indexOf(condition)
+													conditionsList: conditions.splice(
+														conditions.indexOf(condition),
+														1
 													),
 												});
+											setCount((count) => count - 1);
 										}}
 										className='button ml-3 is-danger is-outlined'
 									>
@@ -276,6 +358,32 @@ export const SettingsForm = () => {
 								</li>
 							))}
 						</ul>
+						<hr />
+						<section className='field is-flex is-align-items-center is-flex-direction-row'>
+							<label htmlFor='conditions' className='label mr-4'>
+								Conditions
+							</label>
+							<div className='control'>
+								<input
+									ref={conditionsRef}
+									id='conditions'
+									type='text'
+									className='input'
+									placeholder='Medical condition'
+								/>
+							</div>
+							<button
+								onClick={handleCondition}
+								className={
+									'button ml-3 is-primary is-outlined' +
+									(loading ? ' is-loading' : '')
+								}
+							>
+								<span className='icon is-small'>
+									<FontAwesomeIcon icon={faPlus} />
+								</span>
+							</button>
+						</section>
 					</section>
 				</section>
 			</Form>

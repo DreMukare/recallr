@@ -90,8 +90,8 @@ const Hello = () => {
 					<article>
 						<P className='mb-3 is-size-5'>Conditions</P>
 						<List className='ml-4'>
-							{conditions.map((condition) => (
-								<li className='mb-3'>
+							{conditions.map((condition, index) => (
+								<li key={index} className='mb-3'>
 									{condition.charAt(0).toUpperCase() + condition.slice(1)}
 								</li>
 							))}

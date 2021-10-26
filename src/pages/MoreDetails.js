@@ -12,6 +12,9 @@ import {
 	faArrowsAltV,
 	faThermometerQuarter,
 	faBalanceScale,
+	faUmbrella,
+	faWineGlass,
+	faFire,
 } from '@fortawesome/free-solid-svg-icons';
 
 const Details = styled.div`
@@ -64,6 +67,9 @@ export const MoreDetails = () => {
 	const dateOfBirthRef = useRef();
 	const genderRef = useRef();
 	const allergiesRef = useRef();
+	const insuredRef = useRef();
+	const smokeRef = useRef();
+	const drinkRef = useRef();
 	const { currentUser } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
@@ -77,12 +83,15 @@ export const MoreDetails = () => {
 			setError('');
 
 			await projectFirestore.collection(currentUser.email).doc('bio-data').set({
+				insured: insuredRef.current.value,
 				height: heightRef.current.value,
 				weight: weightRef.current.value,
 				bloodGroup: bloodGroupRef.current.value,
 				eyeColor: eyeColorRef.current.value,
 				dob: dateOfBirthRef.current.value,
 				allergies: allergiesRef.current.value,
+				drink: drinkRef.current.value,
+				smoke: smokeRef.current.value,
 				gender: genderRef.current.value,
 			});
 			history.push('/conditions');
@@ -162,6 +171,23 @@ export const MoreDetails = () => {
 						</div>
 					</section>
 					<section className='field'>
+						<label htmlFor='drink' className='label'>
+							Drink
+						</label>
+						<div className='control has-icons-left'>
+							<input
+								ref={drinkRef}
+								id='drink'
+								type='text'
+								className='input'
+								placeholder='Yes or No'
+							/>
+							<span className='icon is-left is-small'>
+								<FontAwesomeIcon icon={faWineGlass} />
+							</span>
+						</div>
+					</section>
+					<section className='field'>
 						<label htmlFor='eye' className='label'>
 							Eye Color
 						</label>
@@ -176,6 +202,24 @@ export const MoreDetails = () => {
 							/>
 							<span className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faEye} />:
+							</span>
+						</div>
+					</section>
+					<section className='field'>
+						<label htmlFor='insurance' className='label'>
+							Insured
+						</label>
+						<div className='control has-icons-left'>
+							<input
+								ref={insuredRef}
+								type='text'
+								className='input'
+								id='insurance'
+								placeholder='Yes or No'
+								required
+							/>
+							<span className='icon is-left is-small'>
+								<FontAwesomeIcon icon={faUmbrella} />
 							</span>
 						</div>
 					</section>
@@ -195,6 +239,23 @@ export const MoreDetails = () => {
 							<icon className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faVenusMars} />
 							</icon>
+						</div>
+					</section>
+					<section className='field'>
+						<label htmlFor='smoke' className='label'>
+							Smoke
+						</label>
+						<div className='control has-icons-left'>
+							<input
+								ref={smokeRef}
+								id='smoke'
+								type='text'
+								className='input'
+								placeholder='Yes or No'
+							/>
+							<span className='icon is-left is-small'>
+								<FontAwesomeIcon icon={faFire} />
+							</span>
 						</div>
 					</section>
 					<section className='field'>
