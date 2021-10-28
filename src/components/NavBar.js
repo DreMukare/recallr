@@ -18,7 +18,7 @@ export const NavBar = ({ firstLink, firstLinkText }) => {
 
 		try {
 			await logout();
-			history.push('/');
+			history.push('/login');
 		} catch {
 			setError('Failed to log out');
 		}

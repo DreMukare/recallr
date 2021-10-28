@@ -20,14 +20,15 @@ const Button = styled.button`
 `;
 
 export const ResetPassword = () => {
-	const { resetPassword } = useAuth();
+	const { currentUser, resetPassword } = useAuth();
 	const [error, setError] = useState();
 
-	const handleReset = async () => {
+	const handleReset = async (e) => {
+		e.preventDefault();
 		setError('');
 
 		try {
-			await resetPassword();
+			await resetPassword(currentUser.email);
 		} catch (error) {
 			setError(error);
 		}

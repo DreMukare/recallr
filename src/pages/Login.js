@@ -1,19 +1,18 @@
 import React, { useRef, useState } from 'react';
+import illustration from '../images/landing-page-illustration.svg';
+import logo from '../images/asset.png';
 import styled from 'styled-components';
-import SignUpIllustration from '../images/sign-up-illustration.svg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
+import Linker from '../components/Linker';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
-import { projectFirestore } from '../firebase/config';
-import Linker from '../components/Linker';
 
-const FlexArea = styled.div`
-	margin-top: 80px;
-	height: 100%;
+const FlexSection = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: space-around;
+	margin-top: 80px;
 `;
 const FormSection = styled.section`
 	width: 30%;
@@ -48,36 +47,28 @@ const Article = styled.article`
 	margin-top: 30px;
 `;
 
-const SignUp = () => {
+const Login = () => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
-	const nameRef = useRef();
+	const { login, currentUser } = useAuth();
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(false);
 	const history = useHistory();
-	const { currentUser, signup } = useAuth();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
-			setLoading(true);
 			setError('');
-			await signup(emailRef.current.value, passwordRef.current.value);
-			await projectFirestore
-				.collection(currentUser.email)
-				.doc('user-data')
-				.set({
-					name: nameRef.current.value,
-					email: emailRef.current.value,
-				});
-
-			history.push('/more-details');
+			setLoading(true);
+			await login(emailRef.current.value, passwordRef.current.value);
+			history.push('/dashboard');
 		} catch {
-			setError('Failed to Sign Up');
+			setError('Failed to log in');
 		}
 
-		currentUser && console.log(currentUser.email);
+		currentUser &&
+			console.log(`${currentUser.email} is logged in successfully`);
 		setLoading(false);
 	};
 
@@ -87,12 +78,14 @@ const SignUp = () => {
 
 	return (
 		<div>
-			<div className='navbar'>
+			<div className='navbar is-flex is-justify-content-center'>
 				<div className='navbar-brand'>
-					<h2 className='navbar-item'>Logo</h2>
+					<a className='ml-3' href='/'>
+						<img alt='Recallr logo' src={logo} width='80' height='61' />
+					</a>
 				</div>
 				<div className='navbar-end'>
-					<Linker text='Log In' to='/login' classname='navbar-item' />
+					<Linker text='Sign Up' to='/sign-up' classname='navbar-item' />
 				</div>
 			</div>
 			{error && (
@@ -101,32 +94,9 @@ const SignUp = () => {
 					{error}
 				</div>
 			)}
-			<FlexArea>
-				<IllustrationSection>
-					<img
-						alt='Illustration conveying a welcoming message'
-						src={SignUpIllustration}
-					/>
-				</IllustrationSection>
+			<FlexSection>
 				<FormSection>
-					<H2>Join Us!</H2>
-					<div className='field'>
-						<label htmlFor='name' className='label'>
-							Name
-						</label>
-						<div className='control has-icons-left'>
-							<input
-								id='name'
-								ref={nameRef}
-								type='text'
-								className='input'
-								placeholder='Your name'
-							/>
-							<span className='icon is-small is-left'>
-								<FontAwesomeIcon icon={faUser} />
-							</span>
-						</div>
-					</div>
+					<H2>Welcome back!</H2>
 					<div className='field'>
 						<label htmlFor='email' className='label'>
 							Email
@@ -171,24 +141,30 @@ const SignUp = () => {
 									onClick={handleSubmit}
 									className='is-loading'
 								>
-									Sign Up
+									Log In
 								</Button>
 							) : (
 								<Button type='submit' onClick={handleSubmit}>
-									Sign Up
+									Log In
 								</Button>
 							)}
 						</div>
 					</div>
 					<Article>
 						<p>
-							Already have an account? <Linker text='Log In' to='/' />
+							Don't have an account? <Linker text='Sign Up' to='/sign-up' />
 						</p>
 					</Article>
 				</FormSection>
-			</FlexArea>
+				<IllustrationSection>
+					<img
+						alt='Illustration of two doctors with a heart between them. Left-most doctor is standing next to a plant while the right-most doctor is taking notes.'
+						src={illustration}
+					/>
+				</IllustrationSection>
+			</FlexSection>
 		</div>
 	);
 };
 
-export default SignUp;
+export default Login;

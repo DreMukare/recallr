@@ -1,165 +1,255 @@
-import React, { useRef, useState } from 'react';
-import illustration from '../images/landing-page-illustration.svg';
-import styled from 'styled-components';
+import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faLock } from '@fortawesome/free-solid-svg-icons';
-import Linker from '../components/Linker';
-import { useAuth } from '../context/AuthContext';
-import { useHistory } from 'react-router-dom';
+import {
+	faGithub,
+	faTwitter,
+	faLinkedin,
+} from '@fortawesome/free-brands-svg-icons';
+import logo from '../images/asset.png';
+import heroImg from '../images/pexels-shvets-production-7533353 (Medium).png';
+import dataIcon from '../images/data.png';
+import drugIcon from '../images/drug.png';
+import historyIcon from '../images/history.png';
+import styled from 'styled-components';
 
-const FlexSection = styled.div`
+const Nav = styled.nav`
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	justify-content: space-around;
-	margin-top: 80px;
+	margin: 10px;
 `;
-const FormSection = styled.section`
-	width: 30%;
-`;
-const IllustrationSection = styled.section`
-	width: 50%;
-`;
-const H2 = styled.h2`
-	margin-top: 20px;
-	margin-bottom: 20px;
-	font-size: 2em;
-	color: #ff6685;
-`;
-const Button = styled.button`
-	padding: 10px 60px;
-	font-size: 1rem;
-	background-color: #ffffff;
-	border: 1px solid #6356c9;
-	color: #6356c9;
-	transition: 0.3s;
+
+const Link = styled.a`
+	color: #f16484;
+	transition: all 0.4s ease-in-out;
+	margin-left: 10px;
+	margin-right: 10px;
 
 	&:hover {
-		background-color: #6356c9;
-		border: 1px solid #6356c9;
-		color: #ff6685;
-		cursor: pointer;
-		transform: scale(1, 1);
+		color: #6b62fd;
+		transform: scale(1.5);
+		margin: 5px 15px 0 25px;
 	}
 `;
 
-const Article = styled.article`
+const HeroImg = styled.img`
+	opacity: 0.7;
+`;
+
+const HeroSection = styled.section`
+	display: flex;
+	background-color: #6b62fd;
+	color: white;
+`;
+
+const HeroText = styled.section`
+	display: flex;
+	flex-direction: column;
+	margin-left: 150px;
+	width: 350px;
+	justify-content: center;
+`;
+
+const H1 = styled.h1`
+	font-size: 3em;
+`;
+const P = styled.p`
+	margin-top: 20px;
+	font-size: 1.5em;
+`;
+
+const FeatureSection = styled.section`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 20em;
+	margin-bottom: 30px;
+`;
+
+const FeatureHeader = styled.h1`
+	margin-top: 20px;
+	font-size: 3em;
+	color: #f16484;
+	text-align: center;
+`;
+
+const Content = styled.div`
+	display: flex;
+	gap: 30px;
 	margin-top: 30px;
 `;
 
+const FeatureDiv = styled.article`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`;
+
+const Title = styled.p`
+	font-size: 1.5em;
+`;
+
+const Text = styled.p`
+	color: #6b62fd;
+`;
+
+const Icon = styled.section`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 150px;
+	height: 150px;
+`;
+
+const About = styled.footer`
+	background: #3b3d56;
+	color: #ffffff;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: auto;
+	width: 100%;
+	min-height: 15em;
+	clear: both;
+`;
+
+const Attribution = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+	width: 30em;
+
+	& > a:hover {
+		color: white;
+	}
+`;
+
+const ContactLink = styled.a`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	color: white;
+	font-size: 1.5em;
+
+	&:hover {
+		color: #f16484;
+	}
+`;
+
 const LandingPage = () => {
-	const emailRef = useRef();
-	const passwordRef = useRef();
-	const { login, currentUser } = useAuth();
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(false);
-	const history = useHistory();
-
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-
-		try {
-			setError('');
-			setLoading(true);
-			await login(emailRef.current.value, passwordRef.current.value);
-			history.push('/dashboard');
-		} catch {
-			setError('Failed to log in');
-		}
-
-		currentUser &&
-			console.log(`${currentUser.email} is logged in successfully`);
-		setLoading(false);
-	};
-
-	const handleClick = (e) => {
-		setError('');
-	};
-
 	return (
-		<div>
-			<div className='navbar'>
-				<div className='navbar-brand'>
-					<h2 className='navbar-item'>Logo</h2>
-				</div>
-				<div className='navbar-end'>
-					<Linker text='Sign Up' to='/sign-up' classname='navbar-item' />
-				</div>
-			</div>
-			{error && (
-				<div className='notification is-danger'>
-					<button className='delete' onClick={handleClick}></button>
-					{error}
-				</div>
-			)}
-			<FlexSection>
-				<FormSection>
-					<H2>Welcome back!</H2>
-					<div className='field'>
-						<label htmlFor='email' className='label'>
-							Email
-						</label>
-						<div className='control has-icons-left'>
-							<input
-								id='email'
-								ref={emailRef}
-								type='email'
-								className='input'
-								placeholder='you@yourfavehost.com'
-								required
-							/>
-							<span className='icon is-small is-left'>
-								<FontAwesomeIcon icon={faEnvelope} />
-							</span>
-						</div>
-					</div>
-					<div className='field'>
-						<label htmlFor='password' className='label'>
-							Password
-						</label>
-						<div className='control has-icons-left'>
-							<input
-								id='password'
-								ref={passwordRef}
-								type='password'
-								className='input'
-								placeholder='Password'
-								required
-							/>
-							<span className='icon is-small is-left'>
-								<FontAwesomeIcon icon={faLock} />
-							</span>
-						</div>
-					</div>
-					<div className='field'>
-						<div className='control is-flex is-justify-content-center'>
-							{loading ? (
-								<Button
-									type='submit'
-									onClick={handleSubmit}
-									className='is-loading'
-								>
-									Log In
-								</Button>
-							) : (
-								<Button type='submit' onClick={handleSubmit}>
-									Log In
-								</Button>
-							)}
-						</div>
-					</div>
-					<Article>
-						<p>
-							Don't have an account? <Linker text='Sign Up' to='/sign-up' />
-						</p>
-					</Article>
-				</FormSection>
-				<IllustrationSection>
-					<img
-						alt='Illustration of two doctors with a heart between them. Left-most doctor is standing next to a plant while the right-most doctor is taking notes.'
-						src={illustration}
+		<div style={{ height: '100vh' }}>
+			<Nav>
+				<a href='/'>
+					<img src={logo} alt='Recallr logo' width='56px' height='43px' />
+				</a>
+				<section>
+					<Link href='/login'>Login</Link>
+					<Link href='/sign-up'>Sign Up</Link>
+					<Link href='#features'>Features</Link>
+					<Link href='#about'>About</Link>
+				</section>
+			</Nav>
+			<HeroSection>
+				<section>
+					<HeroImg
+						src={heroImg}
+						alt='Happy black man using an iPad. Picture from Shvets Production on pexels'
 					/>
-				</IllustrationSection>
-			</FlexSection>
+				</section>
+				<HeroText>
+					<H1>Recallr</H1>
+					<P>A tool to help you keep track of your medical details.</P>
+				</HeroText>
+			</HeroSection>
+			<FeatureSection id='features'>
+				<FeatureHeader>Features</FeatureHeader>
+				<Content>
+					<FeatureDiv>
+						<Title>Bio Data</Title>
+						<Icon>
+							<img src={dataIcon} alt='Icon of clipboard' />
+						</Icon>
+						<Text>
+							Keep track of information like your blood type, height, weight etc
+						</Text>
+					</FeatureDiv>
+					<FeatureDiv
+						style={{
+							padding: '0 20px 0 20px',
+							borderRight: '2px solid #f16484',
+							borderLeft: '2px solid #f16484',
+						}}
+					>
+						<Title>Drug Subscriptions</Title>
+						<Icon>
+							<img src={drugIcon} alt='Icon of bandaid' />
+						</Icon>
+						<Text>Keep track of your drug subscriptions</Text>
+					</FeatureDiv>
+					<FeatureDiv>
+						<Title>Medical History</Title>
+						<Icon>
+							<img src={historyIcon} alt='Icon of doctor' />
+						</Icon>
+						<Text>Keep track of your recent medical history</Text>
+					</FeatureDiv>
+				</Content>
+			</FeatureSection>
+			<About id='about'>
+				<section style={{ width: '30em', margin: '20px' }}>
+					<h2
+						style={{
+							fontSize: '1.5em',
+							textAlign: 'center',
+						}}
+					>
+						Project Inspiration
+					</h2>
+					<p style={{ marginTop: '20px', lineHeight: '25px' }}>
+						This project was inspired by the countless times someone asked me
+						for my blood type or height and I could not remember. I asked around
+						and some of my friends and family had the same issue. So I figured
+						I'd build this app to help them keep track of some of their medical
+						details. I mocked up this webapp over three weeks while juggling it
+						with other responsibilities. I am open to any feedback on
+						suggestions on how to better this experience for you. Please contact
+						me 😄!
+					</p>
+				</section>
+				<section>
+					<h2
+						style={{
+							fontSize: '1.5em',
+							textAlign: 'center',
+						}}
+					>
+						Contact Me
+					</h2>
+					<div style={{ display: 'flex', gap: '50px', marginTop: '30px' }}>
+						<ContactLink href='https://github.com/DreMukare'>
+							<FontAwesomeIcon icon={faGithub} />
+							Github
+						</ContactLink>
+						<ContactLink href='https://www.linkedin.com/in/andrew-mukare-385088147/'>
+							<FontAwesomeIcon icon={faLinkedin} />
+							LinkedIn
+						</ContactLink>
+						<ContactLink href='https://twitter.com/MukareAndrew'>
+							<FontAwesomeIcon icon={faTwitter} />
+							Twitter
+						</ContactLink>
+					</div>
+				</section>
+				<Attribution>
+					<a href='https://www.pexels.com/photo/black-man-looking-at-tablet-7533353/'>
+						Picture from Shvets Production on pexels
+					</a>
+					<a href='https://www.vecteezy.com/free-vector/medical'>
+						Medical Vectors by Vecteezy
+					</a>
+				</Attribution>
+			</About>
 		</div>
 	);
 };

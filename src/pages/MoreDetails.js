@@ -181,6 +181,7 @@ export const MoreDetails = () => {
 								type='text'
 								className='input'
 								placeholder='Yes or No'
+								required
 							/>
 							<span className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faWineGlass} />
@@ -252,6 +253,7 @@ export const MoreDetails = () => {
 								type='text'
 								className='input'
 								placeholder='Yes or No'
+								required
 							/>
 							<span className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faFire} />

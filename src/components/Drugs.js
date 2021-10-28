@@ -67,13 +67,16 @@ export const Drugs = () => {
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('drugs')
-				.update({
-					[nameRef.current.value]: {
-						name: nameRef.current.value,
-						dosage: dosageRef.current.value,
-						instructions: instructionRef.current.value,
+				.set(
+					{
+						[nameRef.current.value]: {
+							name: nameRef.current.value,
+							dosage: dosageRef.current.value,
+							instructions: instructionRef.current.value,
+						},
 					},
-				});
+					{ merge: true }
+				);
 
 			console.log(dosage);
 		} catch (error) {
@@ -84,6 +87,7 @@ export const Drugs = () => {
 		dosageRef.current.value = '';
 		instructionRef.current.value = '';
 		setLoading(false);
+		console.log(error);
 	};
 
 	useEffect(() => {
@@ -106,7 +110,7 @@ export const Drugs = () => {
 				These are your drug subscriptions
 			</h4>
 			<hr />
-			{!error && (
+			{dosage && (
 				<Section>
 					<ul>
 						{Object.keys(dosage).map((key, index) => (
