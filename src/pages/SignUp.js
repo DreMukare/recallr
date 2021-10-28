@@ -65,7 +65,7 @@ const SignUp = () => {
 			setError('');
 			await signup(emailRef.current.value, passwordRef.current.value);
 			await projectFirestore
-				.collection(currentUser.email)
+				.collection(emailRef.current.value)
 				.doc('user-data')
 				.set({
 					name: nameRef.current.value,
