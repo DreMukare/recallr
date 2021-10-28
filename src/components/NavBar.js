@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Linker from '../components/Linker';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router';
+import logo from '../images/asset.png';
 
 const Nav = styled.nav`
 	border-bottom: 1px solid #8687a1;
@@ -38,7 +39,9 @@ export const NavBar = ({ firstLink, firstLinkText }) => {
 			)}
 			<Nav className='navbar' role='navigation' aria-label='main navigation'>
 				<section className='navbar-brand'>
-					<h2 className='navbar-item'>Logo</h2>
+					<a href='/dashboard'>
+						<img src={logo} alt='Recallr logo' width='56px' height='43px' />
+					</a>
 				</section>
 				<section className='navbar-end'>
 					<div className='navbar-item'>

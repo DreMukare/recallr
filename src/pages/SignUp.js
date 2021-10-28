@@ -7,6 +7,7 @@ import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 import { projectFirestore } from '../firebase/config';
 import Linker from '../components/Linker';
+import logo from '../images/asset.png';
 
 const FlexArea = styled.div`
 	margin-top: 80px;
@@ -89,7 +90,9 @@ const SignUp = () => {
 		<div>
 			<div className='navbar'>
 				<div className='navbar-brand'>
-					<h2 className='navbar-item'>Logo</h2>
+					<a className='ml-3' href='/'>
+						<img alt='Recallr logo' src={logo} width='80' height='61' />
+					</a>
 				</div>
 				<div className='navbar-end'>
 					<Linker text='Log In' to='/login' classname='navbar-item' />
