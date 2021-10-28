@@ -237,9 +237,9 @@ export const MoreDetails = () => {
 								placeholder='Your gender'
 								required
 							/>
-							<icon className='icon is-left is-small'>
+							<span className='icon is-left is-small'>
 								<FontAwesomeIcon icon={faVenusMars} />
-							</icon>
+							</span>
 						</div>
 					</section>
 					<section className='field'>

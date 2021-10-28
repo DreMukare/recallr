@@ -71,10 +71,10 @@ const SignUp = () => {
 					name: nameRef.current.value,
 					email: emailRef.current.value,
 				});
-
 			history.push('/more-details');
-		} catch {
+		} catch (error) {
 			setError('Failed to Sign Up');
+			console.log(error);
 		}
 
 		currentUser && console.log(currentUser.email);
