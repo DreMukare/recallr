@@ -227,25 +227,45 @@ const LandingPage = () => {
 						Contact Me
 					</h2>
 					<div style={{ display: 'flex', gap: '50px', marginTop: '30px' }}>
-						<ContactLink href='https://github.com/DreMukare'>
+						<ContactLink
+							target='_blank'
+							rel='noopener noreferrer'
+							href='https://github.com/DreMukare'
+						>
 							<FontAwesomeIcon icon={faGithub} />
 							Github
 						</ContactLink>
-						<ContactLink href='https://www.linkedin.com/in/andrew-mukare-385088147/'>
+						<ContactLink
+							target='_blank'
+							rel='noopener noreferrer'
+							href='https://www.linkedin.com/in/andrew-mukare-385088147/'
+						>
 							<FontAwesomeIcon icon={faLinkedin} />
 							LinkedIn
 						</ContactLink>
-						<ContactLink href='https://twitter.com/MukareAndrew'>
+						<ContactLink
+							target='_blank'
+							rel='noopener noreferrer'
+							href='https://twitter.com/MukareAndrew'
+						>
 							<FontAwesomeIcon icon={faTwitter} />
 							Twitter
 						</ContactLink>
 					</div>
 				</section>
 				<Attribution>
-					<a href='https://www.pexels.com/photo/black-man-looking-at-tablet-7533353/'>
+					<a
+						target='_blank'
+						rel='noopener noreferrer'
+						href='https://www.pexels.com/photo/black-man-looking-at-tablet-7533353/'
+					>
 						Picture from Shvets Production on pexels
 					</a>
-					<a href='https://www.vecteezy.com/free-vector/medical'>
+					<a
+						target='_blank'
+						rel='noopener noreferrer'
+						href='https://www.vecteezy.com/free-vector/medical'
+					>
 						Medical Vectors by Vecteezy
 					</a>
 				</Attribution>
