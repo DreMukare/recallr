@@ -1,3 +1,5 @@
+/* This css file is used as a reset and to establish default styling for all elements */
+
 html,
 body,
 div,
@@ -80,7 +82,7 @@ mark,
 audio,
 video {
 	border: 0;
-	font-size: 100%;
+	font-size: 1em;
 	font: inherit;
 	vertical-align: baseline;
 	font-family: 'Lato', sans-serif;
@@ -121,6 +123,11 @@ q:after {
 table {
 	border-collapse: collapse;
 	border-spacing: 0;
+}
+
+img {
+	display: block;
+	max-width: 100%;
 }
 
 h1,

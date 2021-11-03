@@ -6,13 +6,20 @@ import { projectFirestore } from '../firebase/config';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router';
 
+// page layout
 const Details = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+
+	& > .content {
+		width: 70%;
+		line-height: 1.4em;
+	}
 `;
 
+// styling for header
 const Instruction = styled.h2`
 	text-align: center;
 	margin: 30px;
@@ -28,15 +35,18 @@ const Instruction = styled.h2`
 	-webkit-text-fill-color: transparent;
 `;
 
+// styling for headerstyling for sub-text
 const H2 = styled.h2`
 	font-family: 'Lato', sans-serif;
 	margin-bottom: 20px;
 `;
 
+// styling to make form responsive at different screen sizes
 const Form = styled.form`
-	width: 40em;
+	width: 90%;
 `;
 
+// styling to make form responsive at different screen sizes
 const Button = styled.button`
 	padding: 10px 60px;
 	font-size: 1rem;
@@ -54,34 +64,60 @@ const Button = styled.button`
 	}
 `;
 
+/**
+ * Conditions Component
+ * Renders conditions page
+ * Handles logic to allow user to submit and store any medical conditions that they have
+ */
 export const Conditions = () => {
+	// state to store error
 	const [error, setError] = useState(false);
+
+	// ref to grab values from form
 	const inputRef = useRef();
+
+	// state to keep track of all conditions entered then submit
 	const [conditions, setConditions] = useState([]);
+
+	// state to keep track of when submit process is undergoing
 	const [loading, setLoading] = useState(false);
+
+	// destructuring to obtain currentUser object from auth context
 	const { currentUser } = useAuth();
+
+	// hook from react-router to allow redirection
 	const history = useHistory();
 
+	// handles click on add button
 	const handleAdd = (e) => {
 		e.preventDefault();
+		// stores current input value in state array
 		setConditions([...conditions, inputRef.current.value]);
 
 		console.log(conditions);
+
+		// clears input ref
 		inputRef.current.value = '';
 	};
 
+	// handles click event on submit button
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
+			// prevents multiple click of submit button
 			setLoading(true);
 			setError('');
+
+			// creates conditions document to store user conditions
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('conditions')
 				.set({
 					conditionsList: conditions,
 				});
+
+			// redirects to dashboard on successful condition submit
 			history.push('/dashboard');
 		} catch (error) {
 			setError(error);
@@ -90,6 +126,7 @@ export const Conditions = () => {
 		setLoading(false);
 	};
 
+	// handler to close error on display of error
 	const handleClick = (e) => {
 		setError('');
 	};

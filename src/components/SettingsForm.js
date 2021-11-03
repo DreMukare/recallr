@@ -16,25 +16,35 @@ import {
 import 'firebase/firestore';
 import firebase from 'firebase/app';
 
+// container for entire section
 const Container = styled.section`
 	margin: 10px;
-	width: 85em;
+	width: 90%;
 `;
 
+// responsive styling for form section
 const Form = styled.form`
 	display: flex;
+	flex-direction: column;
+	gap: 20px;
+
+	@media only screen and (min-width: 900px) {
+		display: flex;
+		flex-direction: row;
+	}
 `;
 
+// spacing for form section
 const BioSection = styled.section`
 	padding-right: 15px;
-	border-right: 1px solid #57d0b1;
 `;
 
+// spacing for form section
 const AllergiesSection = styled.section`
 	padding-right: 15px;
-	border-right: 1px solid #57d0b1;
 `;
 
+// styling for submit button
 const Button = styled.button`
 	padding: 10px 60px;
 	font-size: 1rem;
@@ -52,10 +62,16 @@ const Button = styled.button`
 	}
 `;
 
+// styling for form input
 const Input = styled.input`
 	width: 21em;
 `;
 
+/**
+ * SettingsForm Component
+ * Renders settings form section of settings page
+ * Contains logic to change different user data
+ */
 export const SettingsForm = () => {
 	const { currentUser } = useAuth();
 	const genderRef = useRef();

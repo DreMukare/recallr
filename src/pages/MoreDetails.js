@@ -17,13 +17,17 @@ import {
 	faFire,
 } from '@fortawesome/free-solid-svg-icons';
 
+// styling for page layout
 const Details = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	min-width: 90%;
+	width: auto;
 `;
 
+// styling for header
 const Instruction = styled.h2`
 	text-align: center;
 	margin: 30px;
@@ -39,6 +43,7 @@ const Instruction = styled.h2`
 	-webkit-text-fill-color: transparent;
 `;
 
+// styling for submit button
 const Button = styled.button`
 	padding: 10px 60px;
 	font-size: 1rem;
@@ -55,11 +60,20 @@ const Button = styled.button`
 		transform: scale(1, 1);
 	}
 `;
+
+// styling to make form responsive at different screen sizes
 const Form = styled.form`
-	width: 40em;
+	width: 90%;
 `;
 
+/**
+ * MoreDetails Component
+ * Renders first onboarding page
+ * Contains logic to handle submit of form details
+ * form details store user info in firestore
+ */
 export const MoreDetails = () => {
+	// refs used to grab form values
 	const heightRef = useRef();
 	const weightRef = useRef();
 	const bloodGroupRef = useRef();
@@ -70,18 +84,29 @@ export const MoreDetails = () => {
 	const insuredRef = useRef();
 	const smokeRef = useRef();
 	const drinkRef = useRef();
+
+	// destructuring used to get currentUser object from auth context through custom hook
 	const { currentUser } = useAuth();
+
+	// state used to keep track of whether submit process is finished
 	const [loading, setLoading] = useState(false);
+
+	// state to store error
 	const [error, setError] = useState(false);
+
+	// hook from react-router to redirect
 	const history = useHistory();
 
+	// handles click event on submit button
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
+			// set loading to true to prevent multiple clicks on button
 			setLoading(true);
 			setError('');
 
+			// create document called 'bio-data' and store values grabbed from form
 			await projectFirestore.collection(currentUser.email).doc('bio-data').set({
 				insured: insuredRef.current.value,
 				height: heightRef.current.value,
@@ -94,6 +119,8 @@ export const MoreDetails = () => {
 				smoke: smokeRef.current.value,
 				gender: genderRef.current.value,
 			});
+
+			// redirect to next onboarding page on successful creation of document
 			history.push('/conditions');
 		} catch {
 			setError('Something went wrong.');
@@ -102,6 +129,7 @@ export const MoreDetails = () => {
 		setLoading(false);
 	};
 
+	// handler to close error on display of error
 	const handleClick = (e) => {
 		setError('');
 	};

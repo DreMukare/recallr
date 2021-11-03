@@ -7,23 +7,35 @@ import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 
+// container styles
+// also styles section header
 const Container = styled.section`
-	margin: 10px;
-	width: 85em;
+	width: 90%;
+
+	& > h4 {
+		text-align: center;
+		font-size: 2em;
+	}
+
+	margin: 20px 0;
 `;
 
+// layout styles for form section
 const Form = styled.form`
-	width: fit-content;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;
 
-const DoseInput = styled.input`
-	width: 400px;
-`;
+// input style
+const DoseInput = styled.input``;
 
-const Input = styled.input`
-	width: 600px;
-`;
+// input style
+const Input = styled.input``;
 
+// styling for submit button
 const Button = styled.button`
 	margin-top: 1.5em;
 `;
@@ -47,6 +59,11 @@ const Section = styled.section`
 	}
 `;
 
+/**
+ * Drugs Component
+ * Renders section of dashboard
+ * contains logic to add and delete drug prescriptions
+ */
 export const Drugs = () => {
 	const { currentUser } = useAuth();
 	const [dosage, setDosage] = useState({});
@@ -57,13 +74,18 @@ export const Drugs = () => {
 	const dosageRef = useRef();
 	const instructionRef = useRef();
 
+	// handles click event on add button
 	const handleAdd = async (e) => {
 		e.preventDefault();
 
 		try {
 			setLoading(true);
 			setError('');
+
+			// setting count state to keep track of number of drugs
 			setCount((count) => count + 1);
+
+			// creating (new) document to store entered drug
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('drugs')
@@ -90,6 +112,9 @@ export const Drugs = () => {
 		console.log(error);
 	};
 
+	// useEffect hook to render changes to component (when drug is added, when drug is deleted)
+	// using count as a dependency to avoid infinite loop when passing records as a dependency
+	// rerenders section everytime count changes
 	useEffect(() => {
 		const collectionId = currentUser.email;
 		const fetchData = async () => {
@@ -105,17 +130,15 @@ export const Drugs = () => {
 	}, [currentUser, count]);
 
 	return (
-		<Container className='box'>
-			<h4 className='has-text-centered is-size-5'>
-				These are your drug subscriptions
-			</h4>
+		<Container>
+			<h4>These are your drug subscriptions</h4>
 			<hr />
 			{dosage && (
 				<Section>
 					<ul>
 						{Object.keys(dosage).map((key, index) => (
-							<li key={index} className='block is-flex is-align-items-center'>
-								<article className='content block'>
+							<li key={index}>
+								<article>
 									<p>
 										<b>{key}</b>
 									</p>
@@ -147,7 +170,7 @@ export const Drugs = () => {
 				</Section>
 			)}
 			<hr />
-			<Form className='control is-flex'>
+			<Form className='control'>
 				<section className='field m-3'>
 					<label htmlFor='name' className='label has-text-centered'>
 						Name

@@ -5,27 +5,37 @@ import { projectFirestore } from '../firebase/config';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
+// layout and styling for entire component
 const Container = styled.section`
-	margin: 10px;
-	width: 85em;
+	width: 90%;
+
+	& > h4 {
+		text-align: center;
+		font-size: 2em;
+	}
 `;
 
-const DoseInput = styled.input`
-	width: 400px;
-`;
+// input style
+const DoseInput = styled.input``;
 
-const Input = styled.input`
-	width: 600px;
-`;
+// input style
+const Input = styled.input``;
 
+// styling for submit button
 const Button = styled.button`
 	margin-top: 1.5em;
 `;
 
+// styling for form section
 const Form = styled.form`
-	width: fit-content;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 `;
 
+// styling for display section
 const Section = styled.section`
 	height: 150px;
 	overflow-y: auto;
@@ -45,15 +55,11 @@ const Section = styled.section`
 	}
 `;
 
-/* projectFirestore.collection(currentUser.email).onSnapShot(snapshot => {
-	setRecords(snapshot.docs.map(doc => doc.data()))
-})
-
-projectFirestore.collection(currentUser.email).doc('records').collection('records').add({
-.....record data (date, procedures done, drugs given)
-}) 
-*/
-
+/**
+ * Records Component
+ * Renders record section of dashboard
+ * contains logic to CRD user medical records
+ */
 const Records = () => {
 	const dateRef = useRef();
 	const proceduresRef = useRef();
@@ -64,13 +70,18 @@ const Records = () => {
 	const [count, setCount] = useState(0);
 	const { currentUser } = useAuth();
 
+	// handles click event on add button
 	const handleAdd = async (e) => {
 		e.preventDefault();
 
 		try {
 			setLoading(true);
 			setError('');
+
+			// set count state to keep track of number of records
 			setCount((count) => count + 1);
+
+			// creates record entry in firebase document
 			await projectFirestore
 				.collection(currentUser.email)
 				.doc('records')
@@ -92,6 +103,8 @@ const Records = () => {
 		setLoading(false);
 	};
 
+	// using count as a dependency to avoid infinite loop when passing records as a dependency
+	// rerenders section everytime count changes
 	useEffect(() => {
 		const fetchData = async () => {
 			const recs = [];
@@ -117,10 +130,8 @@ const Records = () => {
 	}, [currentUser, count, records]);
 
 	return (
-		<Container className='box'>
-			<h4 className='has-text-centered is-size-5'>
-				These are your most recent medical records
-			</h4>
+		<Container>
+			<h4>These are your most recent medical records</h4>
 			<hr />
 			{!error && (
 				<Section>
@@ -156,7 +167,7 @@ const Records = () => {
 				</Section>
 			)}
 			<hr />
-			<Form className='control is-flex'>
+			<Form>
 				<section className='field m-3'>
 					<label htmlFor='date' className='label has-text-centered'>
 						Date

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useAuth } from '../context/AuthContext';
 
+// styling for reset password button
 const Button = styled.button`
 	padding: 10px 60px;
 	font-size: 1rem;
@@ -9,6 +10,7 @@ const Button = styled.button`
 	border: 1px solid #6356c9;
 	color: #6356c9;
 	transition: 0.3s;
+	margin: 30px;
 
 	&:hover {
 		background-color: #6356c9;
@@ -19,6 +21,11 @@ const Button = styled.button`
 	}
 `;
 
+/**
+ * ResetPassword Component
+ * Renders button which when clicked will send user an email to allow them to reset their password
+ * Uses function from auth context
+ */
 export const ResetPassword = () => {
 	const { currentUser, resetPassword } = useAuth();
 	const [error, setError] = useState();

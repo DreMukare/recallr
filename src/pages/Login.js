@@ -8,24 +8,65 @@ import Linker from '../components/Linker';
 import { useAuth } from '../context/AuthContext';
 import { useHistory } from 'react-router-dom';
 
-const FlexSection = styled.div`
+// Default styling for whole page
+const Page = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	min-height: 100vh;
+	padding-bottom: 20px;
+`;
+
+// Responsive styling for the navbar
+const Nav = styled.div`
+	margin-top: 15px;
+	width: 80%;
 	display: flex;
 	align-items: center;
-	justify-content: space-around;
-	margin-top: 80px;
+	justify-content: space-between;
 `;
+
+// Responsive styling for container of illustration and form
+const FlexSection = styled.div`
+	height: auto;
+	width: 80%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	@media only screen and (min-width: 1000px) {
+		display: flex;
+		flex-direction: row-reverse;
+		align-items: center;
+		justify-content: space-around;
+	}
+`;
+
+// form style
 const FormSection = styled.section`
-	width: 30%;
+	min-width: 30%;
 `;
+
+// illustration style
 const IllustrationSection = styled.section`
-	width: 50%;
+	height: auto;
+	width: 100%;
+	align-self: center;
+	margin-bottom: 30px;
 `;
+
+// header style
 const H2 = styled.h2`
-	margin-top: 20px;
-	margin-bottom: 20px;
+	margin-top: 30px;
+	margin-bottom: 30px;
 	font-size: 2em;
 	color: #ff6685;
+	text-align: center;
 `;
+
+// styling for submit button
 const Button = styled.button`
 	padding: 10px 60px;
 	font-size: 1rem;
@@ -43,25 +84,44 @@ const Button = styled.button`
 	}
 `;
 
+// styling for section under form
 const Article = styled.article`
 	margin-top: 30px;
 `;
 
+/**
+ * Login Component
+ * Displays login form and processes logic for login
+ */
 const Login = () => {
+	// the refs allow capture of value from form inputs
 	const emailRef = useRef();
 	const passwordRef = useRef();
+
+	// useAuth is a custom hook to expose the firebase context
 	const { login, currentUser } = useAuth();
+
+	// state used to disable button if still loading
 	const [loading, setLoading] = useState(false);
+
+	// state to keep track of errors
 	const [error, setError] = useState(false);
+
+	// use history is a hook from react-router to allow redirection
 	const history = useHistory();
 
+	// function to submit data entered in form and process login
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		try {
 			setError('');
 			setLoading(true);
+
+			// login function defined in auth context. logs user in with values from form through firebase function
 			await login(emailRef.current.value, passwordRef.current.value);
+
+			// redirects to dashboard on successful log in
 			history.push('/dashboard');
 		} catch {
 			setError('Failed to log in');
@@ -72,31 +132,38 @@ const Login = () => {
 		setLoading(false);
 	};
 
+	// handler to close error on display of error
 	const handleClick = (e) => {
 		setError('');
 	};
 
 	return (
-		<div>
-			<div className='navbar is-flex is-justify-content-center'>
-				<div className='navbar-brand'>
-					<a className='ml-3' href='/'>
-						<img alt='Recallr logo' src={logo} width='80' height='61' />
+		<Page>
+			<Nav>
+				<div>
+					<a href='/'>
+						<img alt='Recallr logo' src={logo} width='43' height='32' />
 					</a>
 				</div>
-				<div className='navbar-end'>
-					<Linker text='Sign Up' to='/sign-up' classname='navbar-item' />
+				<div>
+					<Linker text='Sign Up' to='/sign-up' />
 				</div>
-			</div>
+			</Nav>
 			{error && (
 				<div className='notification is-danger'>
 					<button className='delete' onClick={handleClick}></button>
 					{error}
 				</div>
 			)}
+			<H2>Welcome back!</H2>
 			<FlexSection>
+				<IllustrationSection>
+					<img
+						alt='Illustration of two doctors with a heart between them. Left-most doctor is standing next to a plant while the right-most doctor is taking notes.'
+						src={illustration}
+					/>
+				</IllustrationSection>
 				<FormSection>
-					<H2>Welcome back!</H2>
 					<div className='field'>
 						<label htmlFor='email' className='label'>
 							Email
@@ -156,14 +223,8 @@ const Login = () => {
 						</p>
 					</Article>
 				</FormSection>
-				<IllustrationSection>
-					<img
-						alt='Illustration of two doctors with a heart between them. Left-most doctor is standing next to a plant while the right-most doctor is taking notes.'
-						src={illustration}
-					/>
-				</IllustrationSection>
 			</FlexSection>
-		</div>
+		</Page>
 	);
 };
 
