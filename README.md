@@ -1,70 +1,122 @@
-# Getting Started with Create React App
+<div align='center'>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![Recallr](https://github.com/DreMukare/recallr/blob/main/src/images/asset.png?raw=true)
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+<br />
 
-### `npm start`
+<a href='https://github.com/DreMukare/recallr/issues'>
+  <img src='https://img.shields.io/github/issues/DreMukare/recallr'>
+</a>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<a href='https://github.com/DreMukare/recallr/network/members'>
+  <img src='https://img.shields.io/github/forks/DreMukare/recallr'>
+</a>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+<a href='https://github.com/DreMukare/recallr/stargazers'>
+  <img src='https://img.shields.io/github/stars/DreMukare/recallr'>
+</a>
+</div>
 
-### `npm test`
+<br />
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+<div align='center'>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Introduction
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+</div>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+This project was inspired by the countless times someone asked me for my blood type or height and I could not remember. I asked around and some of my friends and family had the same issue. So I figured I'd build this app to help them keep track of some of their medical details. I mocked up this webapp over three weeks while juggling it with other responsibilities. I am open to any feedback on suggestions on how to better this experience for you. Please contact me 😄!
 
-### `npm run eject`
+<div align='center'>
+  <h3>
+    <a href='https://recallr.netlify.app/'>Website</a>
+    <span> | </span>
+    <a href='https://www.linkedin.com/pulse/recallr-andrew-mukare'>Link to Blog Post</a>
+    <span> | </span>
+    <a href='https://www.linkedin.com/in/andrew-mukare-385088147/'>Author's Linked In</a>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+  </h3>
+</div>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<br />
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+<div align='center'>
 
-## Learn More
+## Installation
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+</div>
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+1. Create a firebase project
+2. Create a `.env.local` file
+3. Plugin firebase config variables in the `.env.local` file
+4. These credentials will be used in:
+   [![Screenshot of firebase config file](https://i.postimg.cc/pdmFnGLG/image.png)](https://postimg.cc/7Cy6FN70)
 
-### Code Splitting
+<br />
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+<div align='center'>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Usage
 
-### Making a Progressive Web App
+#### 1. Create an account
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+[![Sign Up Page](https://i.postimg.cc/V6YhDwQL/image.png)](https://postimg.cc/mc5Vg0g0)
 
-### Advanced Configuration
+#### 2. Enter your details
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[![Details page](https://i.postimg.cc/Jhw0y6wQ/image.png)](https://postimg.cc/DSgnHcwW)
 
-### Deployment
+#### 3. Enter any medical conditions that you have
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+[![Enter conditions page](https://i.postimg.cc/RVk4GWPS/image.png)](https://postimg.cc/2V7sSSRM)
 
-### `npm run build` fails to minify
+</div>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+<br />
+
+---
+
+<div align='center'>
+
+## Contributing
+
+</div>
+
+1. Fork the repository
+2. Clone the repo `git clone https://github.com/<your github username>/recallr`
+3. Create new branch `git checkout -b <name of new branch>`
+4. Make changes and test
+5. Submit Pull Request with comprehensive description of changes
+   <br />
+
+---
+
+<div align='center'>
+
+## Related Projects
+
+</div>
+
+- [Mediblock](https://github.com/sbis04/mediblock)
+
+<br />
+
+---
+
+<div align='center'>
+
+## License
+
+<a href='https://github.com/DreMukare/recallr/blob/main/LICENSE'>
+  <img src='https://img.shields.io/github/license/DreMukare/recallr'>
+</a>
+
+</div>
